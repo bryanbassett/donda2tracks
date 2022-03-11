@@ -1,6 +1,28 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <title>DONDA 2 STEM PLAYER VERSION TRACKER / PLATFORM</title>
+    <meta
+      name="title"
+      content="DONDA 2 STEM PLAYER VERSION TRACKER / PLATFORM"
+    />
+    <meta
+      name="description"
+      content="DONDA 2 STEM PLAYER VERSION TRACKER / PLATFORM"
+    />
+    <meta name="keywords" content="kanye,donda,stem player" />
+    <meta name="robots" content="index, follow" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="language" content="English" />
+    <meta name="author" content="bryanthaboi#3088" />
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <link rel="mask-icon" href="safari-pinned-tab.svg" color="#5bbad5" />
+    <meta name="msapplication-TileColor" content="#da532c" />
+    <meta name="theme-color" content="#ffffff" />
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <link
       rel="stylesheet"
@@ -19,238 +41,174 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     ></script>
-
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@forevolve/bootstrap-dark@1.0.0/dist/css/bootstrap-dark.min.css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
-      let tracks = {},
-        tablehtml = "",
-        versions = {},
-        versionsHTML = "",
-        authToken = "",
-        config = "";
-      
-      setTimeout(function () {
-        getTrackInfo();
-      }, 0x1);
-                    //TODO: logged in variable
-                    //TODO: add players not just downloads
-                    //HTML5 player - only one at a time
-                    //TODO: sweetAlerts
-                    //TODO: make dark
-                    //TODO: container around table
-                    //TODO: add metadata, something cool looking, favicon, title
-
-      function makeAuthToken(email) {
-        let token = btoa(email + ":" + new Date().getTime());
-        axios.defaults.headers.common["authorization"] = "basic " + token;
-        config = {
-          headers: { authorization: "basic " + token },
-        };
-      }
-
-      function getTrack(trackId, version, name) {
-        axios
-          .get(
-            "https://api.stemplayer.com/content/tracks/" +
-              trackId +
-              "?version=" +
-              version +
-              "&codec=wav",
-            config
-          )
-          .then((response) => {
-            downloadURI(response.data.data.file, name);
-          });
-      }
-
-      function downloadURI(uri, name) {
-        fetch(uri)
-          .then((resp) => resp.blob())
-          .then((blob) => {
-            const url = window.URL.createObjectURL(blob);
-            const a = document.createElement("a");
-            a.style.display = "none";
-            a.href = url;
-            // the filename you want
-            a.download = name;
-            document.body.appendChild(a);
-            a.click();
-            window.URL.revokeObjectURL(url);
-            alert("your file has downloaded!"); //sweetAlert
-          })
-          .catch(() => alert("oh no!"));
-      }
-      function zeroPad(num, places) {
-        num = num + 1;
-        num = num.toString();
-        while (num.length < places) num = "0" + num;
-        return num;
-      }
-      function makeTable(input) {
-        $(input)["each"](function (e, o) {
-          if (typeof versions[o["metadata"]["version"]] == "undefined") {
-            versions[o["metadata"]["version"]] = 1;
-          } else {
-            versions[o["metadata"]["version"]]++;
-          }
-          //TODO: remove from initial generation
-          tablehtml +=
-            "<tr onclick=\"getTrack('" +
-            o["id"] +
-            "','" +
-            o["metadata"]["version"] +
-            "','" +
-            zeroPad(e, 2) +
-            " - " +
-            o["metadata"]["title"] +
-            " - Version " +
-            o["metadata"]["version"] +
-            ".wav" +
-            '\')" class="trackRow version' +
-            o["metadata"]["version"] +
-            '"><td>' +
-            (e + 0x1) +
-            "</td><td>" +
-            o["metadata"]["title"] +
-            "</td><td>" +
-            o["metadata"]["version"] +
-            "</td>";
-        }),
-          $("#mainHole")["html"](tablehtml);
-
-        doVersionHTML(versions);
-      }
-      function doVersionHTML(input) {
-        $.each(input, function (e, o) {
-          versionsHTML +=
-            '<div class="col-sm-3"> <div class="card" >' +
-            '<div class="card-body">' +
-            '<h5 class="card-title">Version ' +
-            e +
-            "</h5>" +
-            '<button class="btn btn-primary btn-lg" onclick="highlightVersions(\'' +
-            "version" +
-            e +
-            "')\">" +
-            o +
-            "</button>" +
-            "</div>" +
-            "</div></div>";
-        });
-        $("#cards").html(versionsHTML);
-      }
-      function highlightVersions(versionClass) {
-        $(".trackRow").removeClass("bg-info");
-        setTimeout(function () {
-          $("." + versionClass).addClass("bg-info");
-        }, 1);
-      }
-
-      function doAuth(email2) {
-        makeAuthToken(email2);
-        axios
-          .get("https://api.stemplayer.com/accounts/access?email=" + email2)
-          .then((response) => {
-            if (response.data.data.device_purchase == true) {
-              allowDownloads();
-            }
-          })
-          .catch(function (error) {
-            alert("not good email"); //sweet alert
-          });
-      }
-
-      function allowDownloads() {
-        //TODO: actually make this
-        $("#loginForm").slideUp();
-        buttonDownloadCurrentStateAlbum =
-          '<button class="btn btn-danger btn-lg btn-block mb-2">Download Album In Current State</button>';
-        buttonDownloadVersionOneAlbum =
-          '<button class="btn btn-warning btn-lg btn-block mb-2">Download Version One Album</button>';
-        $("#buttons").html(
-          buttonDownloadCurrentStateAlbum + buttonDownloadVersionOneAlbum
-        );
-        setTimeout(function () {
-          $("#buttonBox").slideDown();
-        }, 500);
-        addVersionDownloadsToTracks();
-      }
-
-      function addVersionDownloadsToTracks() {
-        console.log("versions");
-        //TODO: make this
-      }
-
-      function getTrackInfo() {
-        $["get"]("https://api.stemplayer.com/content/albums", function (data) {
-          (tracks = data["data"]["donda_2"]["tracks"]), makeTable(tracks);
-        });
-      }
+      const Toast = Swal.mixin({
+        toast: true,
+        position: "top-end",
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.addEventListener("mouseenter", Swal.stopTimer);
+          toast.addEventListener("mouseleave", Swal.resumeTimer);
+        },
+      });
     </script>
+    <style>
+      :root {
+        --primary: orange !important;
+      }
+
+      .btn-primary {
+        background-color: #f7941d;
+        border-color: #f7941d;
+        color: black;
+      }
+
+      .btn-primary:hover {
+        background-color: #212529;
+        border-color: #f7941d;
+        color: white;
+      }
+      .window {
+        padding: 0 !important;
+      }
+      .window-header {
+        width: 100%;
+        padding: 1em;
+      }
+      .window-buttons {
+        width: 0.75em;
+        height: 0.75em;
+        background: Crimson;
+        border-radius: 50%;
+        box-shadow: 15px 0 0 Orange, 30px 0 0 LimeGreen;
+      }
+      .window-editor {
+        height: 30vh;
+      }
+      .window-editor textarea {
+        padding: 1em;
+        width: 100%;
+        height: 100%;
+        border: none;
+        resize: none;
+        font-family: "PT Mono", monospace;
+        background: transparent;
+        white-space: pre-wrap;
+        word-wrap: break-word;
+        line-height: 1.25em;
+      }
+    </style>
+    <script src="main.js"></script>
   </head>
 
-  <body class="text-center">
+  <body
+    class="text-center bootstrap-dark"
+    style="background-color: black !important"
+  >
     <div class="cover-container d-flex h-100 p-3 mx-auto flex-column">
       <header class="masthead mb-auto">
         <div class="inner">
-          <h3 class="masthead-brand">DONDA 2 TRACK VERSIONS</h3>
+          <img src="stemplayerplatform.png" style="width: 13em" />
         </div>
       </header>
 
       <main role="main" class="inner cover">
-        <div class="container">
-          <div id="cards" class="row"></div>
-        </div>
-        <div class="table-responsive">
-          <table class="table table-striped table-sm">
-            <thead>
-              <tr>
-                <th>#</th>
-                <th>Track Name</th>
-                <th>Version #</th>
-              </tr>
-            </thead>
-            <tbody id="mainHole">
-              <tr>
-                <td></td>
-                <td>loading</td>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <div class="container">
-          <div class="card">
-            <div class="card-header">
-              <div id="buttonBox" style="display: none">
-                <div id="buttons" class="row"></div>
+        <div class="card container" style="padding: 0">
+          <div class="card-header window">
+            <div class="grey lighten-2 window-header">
+              <div class="window-buttons"></div>
+              <h1
+                style="
+                  position: absolute;
+                  top: 10px;
+                  left: 81px;
+                  font-size: 19px;
+                  font-weight: bold;
+                "
+              >
+                DONDA 2 STEM PLAYER VERSION TRACKER / PLATFORM
+              </h1>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="container mb-2">
+              <small
+                style="
+                  text-align: left;
+                  width: 100%;
+                  display: block;
+                  padding-bottom: 10px;
+                "
+                >Click version counts to highlight tracks on that
+                version:</small
+              >
+              <div id="cards" class="row"></div>
+            </div>
+            <div class="container">
+              <div class="table-responsive">
+                <table class="table table-sm">
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>Play</th>
+                      <th>Track Name</th>
+                      <th>Version #</th>
+                      <th>Download</th>
+                    </tr>
+                  </thead>
+                  <tbody id="mainHole">
+                    <tr>
+                      <td></td>
+                      <td>loading</td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                    </tr>
+                  </tbody>
+                </table>
               </div>
-              <form id="loginForm">
-                <div class="form-group">
-                  <label for="exampleInputEmail1"
-                    >Enter Stem Player Purchase Email To Download Songs</label
-                  >
-                  <input
-                    type="email"
-                    class="form-control"
-                    id="exampleInputEmail1"
-                    aria-describedby="emailHelp"
-                    placeholder="Enter email"
-                  />
-                  <small id="emailHelp" class="form-text text-muted"
-                    >Check the code, email is only ever sent to the stem player
-                    api for proper authorization.</small
-                  >
+            </div>
+            <div class="container">
+              <div class="card mb-2">
+                <div class="card-header">
+                  <div id="buttonBox" style="display: none">
+                    <div id="buttons" class="row"></div>
+                  </div>
+                  <form id="loginForm">
+                    <div class="form-group">
+                      <label for="exampleInputEmail1"
+                        >Enter Stem Player Purchase Email To Download Songs
+                        (playing coming soon)</label
+                      >
+                      <input
+                        type="email"
+                        class="form-control"
+                        id="exampleInputEmail1"
+                        aria-describedby="emailHelp"
+                        placeholder="Enter email"
+                      />
+                      <small id="emailHelp" class="form-text text-muted"
+                        >Check the code, email is only ever sent to the stem
+                        player api for proper authorization.</small
+                      >
+                    </div>
+                    <button
+                      type="button"
+                      onclick="doAuth($('#exampleInputEmail1').val())"
+                      class="btn btn-primary"
+                    >
+                      Submit
+                    </button>
+                  </form>
                 </div>
-                <button
-                  type="button"
-                  onclick="doAuth($('#exampleInputEmail1').val())"
-                  class="btn btn-primary"
-                >
-                  Submit
-                </button>
-              </form>
+              </div>
             </div>
           </div>
         </div>
@@ -258,8 +216,13 @@
 
       <footer class="mastfoot mt-auto">
         <div class="inner">
+          <small> v2 </small>
           <p>
-            made by bbassett - cash app if u appreciate the waves $bassett91
+            made by bbassett - bryanthaboi#3088 - cash app if u appreciate the
+            waves $bassett91
+          </p>
+          <p style="color: #2c1a00">
+            reach out on discord if you have any requests
           </p>
         </div>
       </footer>
