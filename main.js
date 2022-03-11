@@ -32,7 +32,7 @@
  * 
  * DONDA 2 STEM PLAYER VERSION TRACKER / PLATFORM BY BBASSETT
  * discord: bryanthaboi#3088
- * version: 2
+ * version: 2.1
 ****************************/
 
 let tracks = {},
@@ -87,14 +87,16 @@ function downloadURI(uri, name) {
       a.click();
       window.URL.revokeObjectURL(url);
       Toast.fire({
-        icon: 'success',
-        title: 'Downloaded ' + name + ' successfully!'
-    });
+        icon: "success",
+        title: "Downloaded " + name + " successfully!",
+      });
     })
-    .catch(() => Toast.fire({
-        icon: 'error',
-        title: 'Something went wrong.'
-    }));
+    .catch(() =>
+      Toast.fire({
+        icon: "error",
+        title: "Something went wrong.",
+      })
+    );
 }
 function zeroPad(num, places) {
   num = num + 1;
@@ -115,9 +117,6 @@ function makeTable(input) {
       '"><td>' +
       (e + 0x1) +
       "</td>" +
-      '<td id="track' +
-      o["id"] +
-      'play"></td>' +
       "<td>" +
       o["metadata"]["title"] +
       "</td><td>" +
@@ -135,12 +134,12 @@ function makeTable(input) {
 function doVersionHTML(input) {
   $.each(input, function (e, o) {
     versionsHTML +=
-      '<div class="col-3"> <div class="card" >' +
-      '<div class="card-header">' +
-      '<h5 class="card-title">Version ' +
+      '<div class="col-2"> <div class="" >' +
+      '<div class="card-header p-1">' +
+      '<h5 class="small d-inline-block pr-2">Version ' +
       e +
       "</h5>" +
-      '<button class="btn btn-primary btn-lg" onclick="highlightVersions(\'' +
+      '<button class="btn btn-primary badge d-inline-block" onclick="highlightVersions(\'' +
       "version" +
       e +
       "')\">" +
@@ -152,9 +151,9 @@ function doVersionHTML(input) {
   $("#cards").html(versionsHTML);
 }
 function highlightVersions(versionClass) {
-  $(".trackRow").removeClass("bg-info");
+  $(".trackRow").removeClass("bg-dark");
   setTimeout(function () {
-    $("." + versionClass).addClass("bg-info");
+    $("." + versionClass).addClass("bg-dark");
   }, 1);
 }
 
@@ -168,11 +167,10 @@ function doAuth(email2) {
       }
     })
     .catch(function (error) {
-     
-        Toast.fire({
-            icon: 'error',
-            title: 'Bad email address'
-        });
+      Toast.fire({
+        icon: "error",
+        title: "Bad email address",
+      });
     });
 }
 
@@ -180,9 +178,9 @@ function allowDownloads() {
   //TODO: actually make this
   $("#loginForm").slideUp();
   let buttonDownloadCurrentStateAlbum =
-    '<button onclick="downloadEntireAlbum(\'mp3\')" class="btn btn-danger btn-lg btn-block mb-2">Download Album In Current State (mp3)</button>';
+    '<button onclick="downloadEntireAlbum(\'mp3\')" class="btn btn-outline-danger  btn-block mb-2">Download Album In Current State (mp3)</button>';
   let buttonDownloadVersionOneAlbum =
-    '<button  onclick="downloadEntireAlbum(\'wav\')" class="btn btn-warning btn-lg btn-block mb-2">Download Album in Current State (wav)</button>';
+    '<button  onclick="downloadEntireAlbum(\'wav\')" class="btn btn-outline-warning btn-block mb-1">Download Album in Current State (wav)</button>';
   //buttonDownloadVersionOneAlbum =
   //  '<button class="btn btn-warning btn-lg btn-block mb-2">Download Version One Album</button>';
   $("#buttons").html(
@@ -207,7 +205,7 @@ function addTypeDownloadsToTracks() {
       " - Version " +
       o["metadata"]["version"] +
       ".mp3'" +
-      ',\'mp3\')" class="btn btn-danger btn-sm m-1">MP3</button>';
+      ',\'mp3\')" class="btn btn-danger badge m-1">MP3</button>';
     let wavbutton =
       "<button  onclick=\"getTrack('" +
       o["id"] +
@@ -220,7 +218,7 @@ function addTypeDownloadsToTracks() {
       " - Version " +
       o["metadata"]["version"] +
       ".wav'" +
-      ',\'wav\')" class="btn btn-warning btn-sm m-1">WAV</button>';
+      ',\'wav\')" class="btn btn-warning badge m-1">WAV</button>';
     let buttonHTML = mp3button + wavbutton;
     $("#track" + o["id"] + "download").html(buttonHTML);
   });

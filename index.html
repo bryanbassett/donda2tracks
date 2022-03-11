@@ -23,19 +23,26 @@
     <meta name="msapplication-TileColor" content="#da532c" />
     <meta name="theme-color" content="#ffffff" />
     <!-- Google Tag Manager -->
-<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-  })(window,document,'script','dataLayer','GTM-5M27QFK');</script>
-  <!-- End Google Tag Manager -->
+    <script>
+      (function (w, d, s, l, i) {
+        w[l] = w[l] || [];
+        w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
+        var f = d.getElementsByTagName(s)[0],
+          j = d.createElement(s),
+          dl = l != "dataLayer" ? "&l=" + l : "";
+        j.async = true;
+        j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
+        f.parentNode.insertBefore(j, f);
+      })(window, document, "script", "dataLayer", "GTM-5M27QFK");
+    </script>
+    <!-- End Google Tag Manager -->
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script
       async
       src="https://www.googletagmanager.com/gtag/js?id=G-SG1DM2X06T"
     ></script>
     <script>
-      window.dataLayer = window.dataLayer || [];
+      window.dataLayer = window.dataLayer || []; //306699062
       function gtag() {
         dataLayer.push(arguments);
       }
@@ -124,6 +131,31 @@
         word-wrap: break-word;
         line-height: 1.25em;
       }
+      .card.container.border-1 {
+        border-radius: 15px;
+        border-color: #8d8d8d;
+      }
+      div.trackList a.list-group-item {
+        padding: 1px;
+        background-color: transparent;
+        font-size: small;
+        text-align: left;
+        color: #767676;
+        border: 0;
+      }
+
+      div.trackList a.list-group-item.active {
+        background-color: transparent;
+        color: white;
+      }
+      td {
+        border: 0 !important;
+        font-size: small;
+      }
+      th {
+        border-top: 0 !important;
+        font-size: small;
+      }
     </style>
     <script src="main.js"></script>
   </head>
@@ -132,23 +164,33 @@
     class="text-center bootstrap-dark"
     style="background-color: black !important"
   >
-  <!-- Google Tag Manager (noscript) -->
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5M27QFK"
-  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-  <!-- End Google Tag Manager (noscript) -->
+    <!-- Google Tag Manager (noscript) -->
+    <noscript
+      ><iframe
+        src="https://www.googletagmanager.com/ns.html?id=GTM-5M27QFK"
+        height="0"
+        width="0"
+        style="display: none; visibility: hidden"
+      ></iframe
+    ></noscript>
+    <!-- End Google Tag Manager (noscript) -->
     <div class="cover-container d-flex h-100 p-3 mx-auto flex-column">
       <header class="masthead mb-auto">
         <div class="inner">
           <img src="stemplayerplatform.png" style="width: 13em" />
+          <h1 class="display-6">
+            DONDA 2 STEM PLAYER VERSION TRACKER / PLATFORM
+          </h1>
         </div>
       </header>
 
       <main role="main" class="inner cover">
-        <div class="card container" style="padding: 0">
+        <div class="card container border-1" style="padding: 0">
           <div class="card-header window">
             <div class="grey lighten-2 window-header">
               <div class="window-buttons"></div>
-              <h1
+              <span
+                class="h1"
                 style="
                   position: absolute;
                   top: 10px;
@@ -157,80 +199,169 @@
                   font-weight: bold;
                 "
               >
-                DONDA 2 STEM PLAYER VERSION TRACKER / PLATFORM
-              </h1>
+                DESTEMIFY
+              </span>
             </div>
           </div>
-          <div class="card-body">
-            <div class="container mb-2">
-              <small
-                style="
-                  text-align: left;
-                  width: 100%;
-                  display: block;
-                  padding-bottom: 10px;
-                "
-                >Click version counts to highlight tracks on that
-                version:</small
+          <div class="card-body p-0">
+            <div class="mx-0 row w-100">
+              <div
+                class="bg-black col-2 pt-2"
+                style="border-bottom-left-radius: 20px"
               >
-              <div id="cards" class="row"></div>
-            </div>
-            <div class="container">
-              <div class="table-responsive">
-                <table class="table table-sm">
-                  <thead>
-                    <tr>
-                      <th>#</th>
-                      <th>Play</th>
-                      <th>Track Name</th>
-                      <th>Version #</th>
-                      <th>Download</th>
-                    </tr>
-                  </thead>
-                  <tbody id="mainHole">
-                    <tr>
-                      <td></td>
-                      <td>loading</td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                    </tr>
-                  </tbody>
-                </table>
+                <div class="list-group trackList">
+                  <a
+                    href="#"
+                    class="list-group-item list-group-item-action active"
+                    >Donda 2</a
+                  >
+                  <a
+                    href="#"
+                    class="list-group-item list-group-item-action disabled"
+                    >Donda</a
+                  >
+                  <a
+                    href="#"
+                    class="list-group-item list-group-item-action disabled"
+                    >Life of the Party</a
+                  >
+                  <a
+                    href="#"
+                    class="list-group-item list-group-item-action disabled"
+                    >Jesus is King</a
+                  >
+                </div>
               </div>
-            </div>
-            <div class="container">
-              <div class="card mb-2">
-                <div class="card-header">
-                  <div id="buttonBox" style="display: none">
-                    <div id="buttons" class="row"></div>
-                  </div>
-                  <form id="loginForm">
-                    <div class="form-group">
-                      <label for="exampleInputEmail1"
-                        >Enter Stem Player Purchase Email To Download Songs
-                        (playing coming soon)</label
-                      >
-                      <input
-                        type="email"
-                        class="form-control"
-                        id="exampleInputEmail1"
-                        aria-describedby="emailHelp"
-                        placeholder="Enter email"
-                      />
-                      <small id="emailHelp" class="form-text text-muted"
-                        >Check the code, email is only ever sent to the stem
-                        player api for proper authorization.</small
-                      >
+              <div
+                class="col-10 pl-0 pr-0 pt-0"
+                style="
+                  background-image: linear-gradient(
+                    #ff6500,
+                    #191919,
+                    #191919,
+                    #191919
+                  );
+                  border-bottom-right-radius: 20px;
+                "
+              >
+                <div class="albumHeader pt-4 px-3" style="">
+                  <div class="row">
+                    <div class="col-3">
+                      <div class="container">
+                        <div class="flex">
+                          <div
+                            class="albumArtBox"
+                            style="
+                              width: 200px;
+                              height: 200px;
+                              padding: 2rem;
+                              background-color: black;
+                              margin-bottom: 2rem;
+                              box-shadow: 0px 0px 20px 4px black;
+                            "
+                          ></div>
+                        </div>
+                      </div>
                     </div>
-                    <button
-                      type="button"
-                      onclick="doAuth($('#exampleInputEmail1').val())"
-                      class="btn btn-primary"
-                    >
-                      Submit
-                    </button>
-                  </form>
+                    <div class="col-9">
+                      <div
+                        class="w-100 h-100 p-2"
+                        style="
+                          display: flex;
+                          justify-content: space-between;
+                          flex-direction: column;
+                        "
+                      >
+                        <div></div>
+                        <div style="">
+                          <small
+                            class="d-flex display-6 pb-2 text-left"
+                            style="font-size: 0.6rem"
+                            >ALBUM</small
+                          >
+                          <h2 class="display-3 font-weight-bold mb-3 text-left">
+                            Donda 2
+                          </h2>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="container mb-2">
+                  <div
+                    id="cards"
+                    class="row"
+                    style="flex-direction: row-reverse"
+                  ></div>
+                  <small
+                    style="
+                      text-align: right;
+                      width: 100%;
+                      display: block;
+                      font-size: 0.6rem;
+                      text-transform: uppercase;
+                      color: rgba(255, 255, 255, 0.493);
+                    "
+                    >Click version counts to highlight tracks on that
+                    version</small
+                  >
+                </div>
+                <div class="container">
+                  <div class="table-responsive">
+                    <table class="table table-sm" style="text-align: left">
+                      <thead>
+                        <tr>
+                          <th>#</th>
+                          <th>Title</th>
+                          <th>Version</th>
+                          <th>Download</th>
+                        </tr>
+                      </thead>
+                      <tbody id="mainHole">
+                        <tr>
+                          <td>loading</td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+                <div class="container">
+                  <div class="card mb-2">
+                    <div class="card-header">
+                      <div id="buttonBox" style="display: none">
+                        <div id="buttons" class="row"></div>
+                      </div>
+                      <form id="loginForm">
+                        <div class="form-group">
+                          <label for="exampleInputEmail1"
+                            >Enter Stem Player Purchase Email To Download Songs
+                            (playing coming soon)</label
+                          >
+                          <input
+                            type="email"
+                            class="form-control"
+                            id="exampleInputEmail1"
+                            aria-describedby="emailHelp"
+                            placeholder="Enter email"
+                          />
+                          <small id="emailHelp" class="form-text text-muted"
+                            >Check the code, email is only ever sent to the stem
+                            player api for proper authorization.</small
+                          >
+                        </div>
+                        <button
+                          type="button"
+                          onclick="doAuth($('#exampleInputEmail1').val())"
+                          class="btn btn-primary"
+                        >
+                          Submit
+                        </button>
+                      </form>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -240,7 +371,7 @@
 
       <footer class="mastfoot mt-auto">
         <div class="inner">
-          <small> v2 </small>
+          <small> v2.1 </small>
           <p>
             made by bbassett - bryanthaboi#3088 - cash app if u appreciate the
             waves $bassett91
